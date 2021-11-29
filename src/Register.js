@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const registerUrl = "";
+const registerUrl =
+  "https://xdhylrg4nh.execute-api.us-east-1.amazonaws.com/prod/register";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -18,12 +19,12 @@ const Register = () => {
       email.trim() === "" ||
       username.trim() === "" ||
       penname.trim() === "" ||
-      penname.trim() === ""
+      password.trim() === ""
     ) {
       setMessage("All fields are required");
       return;
     }
-
+    setMessage(null);
     const requestConfig = {
       headers: {
         "x-api-key": "",
@@ -34,6 +35,7 @@ const Register = () => {
       username: username,
       email: email,
       name: name,
+      penname: penname,
       password: password,
     };
     axios
@@ -56,35 +58,35 @@ const Register = () => {
     <div>
       <form onSubmit={submitHandler}>
         <h5>Register</h5>
-        Full Name:{" "}
+        Full Name:
         <input
           type="text"
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
         <br />
-        E-mail:{" "}
+        E-mail:
         <input
           type="text"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
         <br />
-        Username:{" "}
+        Username:
         <input
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
         <br />
-        Pen Name:{" "}
+        Pen Name:
         <input
           type="text"
           value={penname}
           onChange={(event) => setPenname(event.target.value)}
         />
         <br />
-        Password:{" "}
+        Password:
         <input
           type="password"
           value={password}
