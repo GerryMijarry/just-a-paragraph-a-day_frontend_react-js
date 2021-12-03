@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { setUserSession } from "./service/AuthService";
 import axios from "axios";
 
-const loginUrl = "";
+const loginUrl =
+  "https://xdhylrg4nh.execute-api.us-east-1.amazonaws.com/prod/login";
 
 const Login = (props) => {
   const [username, setUsername] = useState("");
@@ -18,7 +19,7 @@ const Login = (props) => {
     setErrorMessage(null);
     const requestConfig = {
       headers: {
-        "x-api-key": "",
+        "x-api-key": "u8NeUf6akQaClOW3IkTdx5fU7IDaCjRJ4fy54edB",
       },
     };
 
@@ -30,7 +31,7 @@ const Login = (props) => {
       .post(loginUrl, requestBody, requestConfig)
       .then((response) => {
         setUserSession(response.data.user, response.data.token);
-        props.history.push("/books");
+        props.history.push("/profile");
       })
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {

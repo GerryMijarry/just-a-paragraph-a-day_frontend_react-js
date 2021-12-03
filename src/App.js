@@ -2,6 +2,7 @@ import { BrowserRouter, NavLink, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
+import MyProfile from "./MyProfile";
 import Books from "./Books";
 import Chapters from "./Chapters";
 import Paragraphs from "./Paragraphs";
@@ -16,7 +17,8 @@ import {
   resetUserSession,
 } from "./service/AuthService";
 
-const verifyTokenAPIURL = "";
+const verifyTokenAPIURL =
+  "https://xdhylrg4nh.execute-api.us-east-1.amazonaws.com/prod/verify";
 
 function App() {
   const [isAuthenticating, setAuthenticating] = useState(true);
@@ -34,7 +36,7 @@ function App() {
 
     const requestConfig = {
       headers: {
-        "x-api-key": "",
+        "x-api-key": "u8NeUf6akQaClOW3IkTdx5fU7IDaCjRJ4fy54edB",
       },
     };
 
@@ -73,10 +75,13 @@ function App() {
           <NavLink activeClassName="active" to="/login">
             Login
           </NavLink>
-          <NavLink activeClassName="active" to="/Books">
+          <NavLink activeClassName="active" to="/profile">
+            My Profile
+          </NavLink>
+          <NavLink activeClassName="active" to="/books">
             Books
           </NavLink>
-          <NavLink activeClassName="active" to="/Chapters">
+          <NavLink activeClassName="active" to="/chapters">
             Chapters
           </NavLink>
           <NavLink activeClassName="active" to="/Paragraphs">
@@ -88,6 +93,7 @@ function App() {
             <Route exact path="/" component={Home}></Route>
             <PublicRoute path="/login" component={Login}></PublicRoute>
             <PublicRoute path="/register" component={Register}></PublicRoute>
+            <PrivateRoute path="/profile" component={MyProfile}></PrivateRoute>
             <PrivateRoute path="/books" component={Books}></PrivateRoute>
             <PrivateRoute path="/chapters" component={Chapters}></PrivateRoute>
             <PrivateRoute

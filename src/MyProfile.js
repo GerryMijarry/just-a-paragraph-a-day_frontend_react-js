@@ -1,16 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  getToken,
+  getUser,
+  resetUserSession,
+  setUserSession,
+} from "./service/AuthService";
 import axios from "axios";
 
-const registerUrl =
-  "https://xdhylrg4nh.execute-api.us-east-1.amazonaws.com/prod/register";
+const MyProfile = (props) => {
+  const profileURL =
+    "https://xdhylrg4nh.execute-api.us-east-1.amazonaws.com/prod/profile";
 
-const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [penname, setPenname] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
+
+  const user = getUser();
+
+  setName(user.name);
+
+  const logoutHandler = () => {
+    resetUserSession();
+    props.history.push("/login");
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -18,8 +32,7 @@ const Register = () => {
       name.trim() === "" ||
       email.trim() === "" ||
       username.trim() === "" ||
-      penname.trim() === "" ||
-      password.trim() === ""
+      penname.trim() === ""
     ) {
       setMessage("All fields are required");
       return;
@@ -32,16 +45,16 @@ const Register = () => {
     };
 
     const requestBody = {
+      token: getToken(),
       username: username,
       email: email,
       name: name,
       penname: penname,
-      password: password,
     };
     axios
-      .post(registerUrl, requestBody, requestConfig)
+      .post(profileURL, requestBody, requestConfig)
       .then((response) => {
-        setMessage("Registration Successful");
+        setMessage("Update Successful");
       })
       .catch((error) => {
         if (error.response.status === 401 || error.response.status === 403) {
@@ -56,6 +69,9 @@ const Register = () => {
 
   return (
     <div>
+      Hello {name}! You can update your profile below: &nbsp;
+      <input type="button" value="Logout" onClick={logoutHandler} />
+      <br />
       <form onSubmit={submitHandler}>
         <h5>Register</h5>
         Full Name:
@@ -86,13 +102,6 @@ const Register = () => {
           onChange={(event) => setPenname(event.target.value)}
         />
         <br />
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <br />
         <input type="submit" value="register" />
       </form>
       {message && <p className="message">{message}</p>}
@@ -100,4 +109,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default MyProfile;
