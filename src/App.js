@@ -4,7 +4,6 @@ import Login from "./Login";
 import Register from "./Register";
 import MyProfile from "./MyProfile";
 import Books from "./Books";
-import Chapters from "./Chapters";
 import Paragraphs from "./Paragraphs";
 import PublicRoute from "./routes/PublicRoutes";
 import PrivateRoute from "./routes/PrivateRoutes";
@@ -81,9 +80,6 @@ function App() {
           <NavLink activeClassName="active" to="/books">
             Books
           </NavLink>
-          <NavLink activeClassName="active" to="/chapters">
-            Chapters
-          </NavLink>
           <NavLink activeClassName="active" to="/Paragraphs">
             Paragraphs
           </NavLink>
@@ -95,7 +91,6 @@ function App() {
             <PublicRoute path="/register" component={Register}></PublicRoute>
             <PrivateRoute path="/profile" component={MyProfile}></PrivateRoute>
             <PrivateRoute path="/books" component={Books}></PrivateRoute>
-            <PrivateRoute path="/chapters" component={Chapters}></PrivateRoute>
             <PrivateRoute
               path="/paragraphs"
               component={Paragraphs}
